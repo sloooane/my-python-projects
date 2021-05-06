@@ -1,0 +1,61 @@
+
+import matplotlib.pyplot as plt
+
+# I used google colab to write this code
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+#these are the csvs that contain genetic information from the cytochrome b(CYTB) gene of the three species I was comparing.
+
+manatee = open("/content/4a_CYTB_DNA_txt.txt").read()
+dolphin = open("/content/4b_CYTB_DNA_txt.txt").read()
+cow = open("/content/4c_CYTB_DNA_txt.txt").read()
+
+data = open("/content/Lines_20210322_1616450989603.csv").read()
+
+#these for loops compare the differences between the cytochrome b gene in dolphins and manatees, manatees and cows, and cows and dolphins, then prints the amount of differences between each pair's genetic information. 
+differences = 0
+for c,i in enumerate(manatee):
+  if dolphin[c]!= i:
+    differences += 1
+print(differences)
+
+differences2 = 0
+for c,i in enumerate(manatee):
+  if cow[c]!= i:
+    differences2 += 1
+print(differences2)
+
+differences3 = 0
+for c,i in enumerate(cow):
+  if dolphin[c]!= i:
+    differences3 += 1
+print(differences3)
+
+#This prints the total length of the cytochrome b gene.
+total = len("ATGACCAACATCCGAAAAACACACCCGCTAATAAAAATCCTCAATGATGCATTCATTGATCTACCCACTCCATCTAATATCTCCTCTTGGTGAAATTTTGGTTCCTTACTAGGCCTCTGCCTAATTATACAAATCCTAACAGGACTATTTCTAGCAATACATTACACGCCAGATACCTCAACTGCTTTCTCATCAGTCGCACACATCTGCCGAGACGTCAACTATGGCTGATTCATCCGCTATTTACATGCAAACGGAGCCTCCATATTCTTCATCTGTCTATACGCCCACATTGGACGTGGCCTATACTATGGCTCTTATATGTTCCAAGAAACATGAAATATTGGTGTACTCTTACTACTAACAGTCATAGCCACTGCATTCGTAGGTTACGTCCTACCCTGAGGACAAATATCATTCTGAGGCGCAACCGTCATCACCAACCTCTTATCAGCAATCCCTTATATTGGCACTACCTTAGTTGAATGAATCTGAGGTGGATTCTCCGTAGACAAAGCAACATTAACACGCTTTTTCGCTTTCCACTTTATCCTCCCATTCATCATTACAGCATTAGCAGCCGTTCACCTGCTATTCCTACACGAAACAGGATCCAATAACCCCACAGGAATCCCATCCAATATAGACATAATCCCATTCCACCCTTATTACACAATCAAAGATATCCTAGGTGCCTTACTCCTAATCTTAACCCTACTAGCACTGACCCTATTCACTCCAGACCTACTAGGAGACCCTGATAACTATACCCCAGCAAATCCACTAAGCACCCCTGCACATATCAAACCAGAATGATACTTTCTATTCGCATACGCAATCTTACGATCAATCCCTAATAAACTTGGAGGAGTCCTAGCACTACTACTCTCCATCCTTATCCTAATCTTTATCCCAATACTTCAAACATCCAAACAACGAAGCATAATATTCCGACCCTTCAGCCAACTCCTATTTTGAACCCTAATCGCTGACCTCTTAACCTTAACATGAATTGGAGGTCAACCCGTAGAACACCCATATATCATTGTAGGCCAATTAGCATCTATTCTATACTTCCTCTTAATCCTAGTGCTAATACCAACAGCCGGCCTTATTGAAAATAAACTCCTAAAATGAAGA")
+print(total)
+
+print((differences/total)*100,"%" )
+print((differences2/total)*100,"%" )
+print((differences3/total)*100,"%" )
+
+#here I found the percent similarity between the cytochrome b gene in these three species pairs. 
+percent1=(((total-differences)/total)*100,"%" )
+percent2=(((total-differences2)/total)*100,"%" )
+percent3=(((total-differences3)/total)*100,"%" )
+print(percent1)
+print(percent2)
+print(percent3)
+
+#This create a bar graph comparing the percent similarity between the pairs. 
+
+import matplotlib.pyplot as plt
+species= ("manatee-dolphin", "manatee-cow", "cow-dolphin")
+percentTotals = (76.49122807017544, 76.05263157894737,79.21052631578948)
+plt.bar(species,percentTotals)
+plt.title('Percent Similarity Between Pairs of Species')
+plt.xlabel('species')
+plt.ylabel('percent similarity')
+plt.show()
